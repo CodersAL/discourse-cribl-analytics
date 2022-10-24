@@ -1,0 +1,13 @@
+<td class='rank'>{{item.rank}}</td>
+
+<td class='user-info'>
+  <a href={{item.user.path}} data-user-card={{item.user.username}}>
+    {{avatar item.user imageSize='large'}}
+    <div class='user-detail'>
+      <span class='name'>{{item.user.name}}</span>
+      <span class='username'>{{item.user.username}}</span>
+    </div>
+  </a>
+</td>
+
+<td class='points'>{{item.points}}</td>

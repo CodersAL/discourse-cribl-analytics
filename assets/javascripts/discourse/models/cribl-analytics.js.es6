@@ -1,0 +1,65 @@
+import EmberObject from '@ember/object';
+import { ajax } from 'discourse/lib/ajax';
+import User from 'discourse/models/user';
+
+const Analyics = EmberObject.extend({});
+
+Analyics.reopenClass({
+  list(params) {
+    let filters = [];
+
+    if (params.period) {
+      filters.push(`page=${params.page}`);
+    }
+
+    if (params.page) {
+      filters.push(`page=${params.page}`);
+    }
+
+    return ajax(`/cribl/analyics.json?${filters.join('&')}`).then(
+      (result) => {
+        return this.buildAnalyicsData(result);
+      }
+    );
+  },
+
+  loadMore(loadMoreUrl) {
+    return ajax(loadMoreUrl).then((result) => {
+      if (!result) {
+        return;
+      }
+      return this.buildAnalyicsData(result);
+    });
+  },
+
+  buildAnalyicsData(result) {
+    if (!result.data || result.data === null) {
+      return;
+    }
+    const { data, meta } = result;
+    const currentUser = User.current() ? User.current() : null;
+    const props = data.map((item) => {
+      return {
+        id: item.id,
+        active: item.active,
+        user: {
+          username: item.username,
+          name: item.name,
+          avatar_template: item.avatar_template?.replace('{size}', '75'),
+          path: `/u/${item.username}`,
+        },
+        rank: item.mrank,
+        yesterdayRank: item.yesterdays_rank,
+        dailyRankMove: item.daily_rank_move,
+        timestamp: item.timestamp,
+        points: item.points,
+        currentUser: item.username === currentUser?.username ? true : false,
+      };
+    });
+
+    data.props = props;
+    return result;
+  },
+});
+
+export default Analyics;

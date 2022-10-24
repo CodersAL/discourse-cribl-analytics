@@ -1,0 +1,4 @@
+plugins:
+  cribl_analyics_enabled:
+    client: true
+    default: true

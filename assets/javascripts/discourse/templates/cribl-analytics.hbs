@@ -1,0 +1,12 @@
+{{#if hasParams}}
+  {{cribl-analyics-table
+    analyics=analyics
+    period=period
+    isLoading=isLoading
+    loadMore=(action 'loadMore')
+  }}
+{{else}}
+  <div class='alert alert-info'>
+    <p>{{i18n 'cribl_analyics.hint_alert'}}</p>
+  </div>
+{{/if}}

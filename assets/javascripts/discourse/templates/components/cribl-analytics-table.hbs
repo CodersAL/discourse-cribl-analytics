@@ -1,0 +1,31 @@
+{{conditional-loading-spinner condition=isLoading}}
+{{#if analyics}}
+  {{#load-more selector='.cribl-analyics-list tr' action=loadMore}}
+    <table class='table grid cribl-analyics-list'>
+      <thead>
+        {{table-header-toggle
+          field='rank'
+          labelKey='cribl_analyics.fields.rank'
+          automatic=true
+        }}
+        {{table-header-toggle
+          field='name'
+          labelKey='cribl_analyics.fields.name'
+          automatic=true
+        }}
+        {{table-header-toggle
+          field='points'
+          labelKey='cribl_analyics.fields.points'
+          automatic=true
+        }}
+      </thead>
+      <tbody>
+        {{#each analyics as |item|}}
+          {{cribl-analyics-table-row item=item isTodays=isTodays}}
+        {{/each}}
+      </tbody>
+    </table>
+  {{/load-more}}
+{{else}}
+  <p>{{i18n 'cribl_analyics.no_results'}}</p>
+{{/if}}

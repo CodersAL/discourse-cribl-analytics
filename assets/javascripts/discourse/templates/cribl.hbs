@@ -1,0 +1,19 @@
+<h1>{{i18n 'cribl_analyics.title'}}</h1>
+<nav>
+  <ul class='nav nav-pills'>
+    <li>
+      {{#link-to
+        'cribl.analyics'
+        (query-params page=0 period='quarter')
+      }}{{i18n 'cribl_analyics.nav.quarter'}}{{/link-to}}
+    </li>
+    <li>
+      {{#link-to
+        'cribl.analyics'
+        (query-params page=0 period='all_time')
+      }}{{i18n 'cribl_analyics.nav.all_time'}}{{/link-to}}
+    </li>
+  </ul>
+</nav>
+
+{{outlet}}
